@@ -81,7 +81,7 @@ async function describeImage(imageBase64: string) {
       } else {
         const imageData = imageBase64.split(',')[1]
 
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro-vision' })
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.0-pro-001' })
         const prompt = 'List the books in this image.'
         const image = {
           inlineData: {
@@ -92,7 +92,7 @@ async function describeImage(imageBase64: string) {
 
         const result = await model.generateContent([prompt, image])
         text = result.response.text()
-        console.log(text)
+        console.log("chatbot response",text)
       }
 
       spinnerStream.done(null)
@@ -132,6 +132,8 @@ async function describeImage(imageBase64: string) {
 async function submitUserMessage(content: string) {
   'use server'
 
+  console.log("content", content);
+  
   await rateLimit()
 
   const aiState = getMutableAIState()
